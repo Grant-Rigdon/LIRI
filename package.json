@@ -1,0 +1,25 @@
+{
+  "name": "liri",
+  "version": "1.0.0",
+  "description": "",
+  "main": "liri.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Grant-Rigdon/LIRI.git"
+  },
+  "author": "Grant Rigdon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Grant-Rigdon/LIRI/issues"
+  },
+  "homepage": "https://github.com/Grant-Rigdon/LIRI#readme",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "moment": "^2.22.2",
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.88.0"
+  }
+}
