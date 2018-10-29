@@ -17,45 +17,48 @@ var movieUrl = "http://www.omdbapi.com/?t=" + searchItem + "&y=&plot=short&apike
 
 var bandsUrl = "https://rest.bandsintown.com/artists/" + searchItem + "/events?app_id=codingbootcamp";
 
-fs.appendFile('log.txt', "\r\n"+command+" "+searchItem, function (err) {
+fs.appendFile('log.txt', "\r\n" + command + ", " + searchItem, function (err) {
     if (err) throw err;
-  });
+});
 
-var run = function(){
-    switch(command){
+var run = function () {
+    switch (command) {
         case `concert-this`:
-            request(bandsUrl, function(error,response,body){
-                if(!error && response.statusCode === 200){
-                    console.log("\r\nVenue: "+JSON.parse(body)[0].venue.name)
-                    console.log("Location: "+JSON.parse(body)[0].venue.city)
-                    console.log("Date: "+moment(JSON.parse(body)[0].datetime).format("MM-DD-YYYY"))
-                }else{
+            request(bandsUrl, function (error, response, body) {
+                if (!error && response.statusCode === 200) {
+                    console.log("\r\nVenue: " + JSON.parse(body)[0].venue.name)
+                    console.log("Location: " + JSON.parse(body)[0].venue.city)
+                    console.log("Date: " + moment(JSON.parse(body)[0].datetime).format("MM-DD-YYYY"))
+                } else {
                     console.log("\r\nNo results found. Please try another search term")
                 }
             })
 
             break;
         case `spotify-this-song`:
-            spotify.search({ type: 'track', query: searchItem }, function(err, data) {
+            spotify.search({
+                type: 'track',
+                query: searchItem
+            }, function (err, data) {
                 if (err) {
-                return console.log("\r\nNo results found. Please try another search term");
+                    return console.log("\r\nNo results found. Please try another search term");
                 }
-            var results = data.tracks.items[0]
-            // console.log(results)
-            var a = ""
-            for(i=0;i<results.artists.length;i++){
-                a += (results.artists[i].name+" ")
-            };
-            console.log("\r\nArtist(s): "+a)
-            console.log("Song Title: "+results.name)
-            console.log("Link: "+results.preview_url) 
-            console.log("Album: "+results.album.name)
+                var results = data.tracks.items[0]
+                // console.log(results)
+                var a = ""
+                for (i = 0; i < results.artists.length; i++) {
+                    a += (results.artists[i].name + " ")
+                };
+                console.log("\r\nArtist(s): " + a)
+                console.log("Song Title: " + results.name)
+                console.log("Link: " + results.preview_url)
+                console.log("Album: " + results.album.name)
             });
 
             break;
         case `movie-this`:
-            request(movieUrl, function(error, response, body){
-                if(!error && response.statusCode === 200){
+            request(movieUrl, function (error, response, body) {
+                if (!error && response.statusCode === 200) {
                     console.log("\r\nTitle: " + JSON.parse(body).Title)
                     console.log("Year: " + JSON.parse(body).Year)
                     console.log("IMDB Rating: " + JSON.parse(body).imdbRating)
@@ -63,15 +66,15 @@ var run = function(){
                     console.log("Country: " + JSON.parse(body).Country)
                     console.log("Plot: " + JSON.parse(body).Plot)
                     console.log("Actors: " + JSON.parse(body).Actors)
-                }else{
+                } else {
                     console.log("\r\nNo results found. Please try another search term")
                 }
-            })    
+            })
 
             break;
         case `do-what-it-says`:
-            fs.readFile('./random.txt','utf8', function(err, data) {
-                if(err) throw err;
+            fs.readFile('./random.txt', 'utf8', function (err, data) {
+                if (err) throw err;
                 var array = data.split(",");
                 searchItem = array[1]
                 command = array[0]
